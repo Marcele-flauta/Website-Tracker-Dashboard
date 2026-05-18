@@ -7,7 +7,7 @@
   --cv-black:     #101820;
   --cv-white:     #ffffff;
 
-  /* System / functional (outside brand palette) */
+  /* System / functional */
   --sys-yellow-tint: #fffbf0;
   --sys-success:     #2e7d32;
   --sys-error:       #c0392b;
@@ -75,8 +75,48 @@ body {
   cursor: pointer;
   transition: opacity 0.15s;
 }
-.btn-primary:hover { opacity: 0.85; }
-.btn-primary:active { opacity: 0.7; }
+.btn-primary:hover  { opacity: 0.85; }
+.btn-primary:active { opacity: 0.70; }
+.btn-primary.btn-sm { padding: 5px 12px; font-size: 11px; }
+
+/* Refresh button — ghost style on dark header */
+.btn-refresh {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--cv-cool-grey);
+  border: 1px solid var(--cv-cool-grey);
+  border-radius: 4px;
+  padding: 7px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.btn-refresh:hover:not(:disabled) {
+  color: var(--cv-yellow);
+  border-color: var(--cv-yellow);
+}
+.btn-refresh:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.refresh-icon {
+  font-size: 15px;
+  display: inline-block;
+  transition: none;
+}
+.refresh-icon.spinning {
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
 /* ── MAIN / TABLE WRAPPER ───────────────────────────── */
 main {
@@ -97,12 +137,10 @@ main {
   min-width: 900px;
 }
 
-/* Column headers */
 .tracker-table thead th {
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 12px;
-  letter-spacing: 0.025em;
   color: var(--cv-dark-grey);
   background: #f7f7f7;
   text-align: left;
@@ -111,7 +149,7 @@ main {
   white-space: nowrap;
 }
 
-/* Stage column headers — rotated so 12 short headers don't eat width */
+/* Stage column headers — vertical text */
 .stage-col-header {
   width: 28px;
   min-width: 28px;
@@ -137,6 +175,7 @@ main {
   border-bottom: 1px solid #ebebeb;
   border-left: 3px solid transparent;
   transition: background 0.1s, border-left-color 0.25s;
+  position: relative;
 }
 .client-row:last-child { border-bottom: none; }
 .client-row:hover { background: #fafafa; }
@@ -147,14 +186,29 @@ main {
   vertical-align: middle;
 }
 
-/* Client name */
+/* Client name — clickable to edit */
 .client-name-cell {
   font-weight: 300;
   min-width: 160px;
   max-width: 220px;
+  cursor: text;
+}
+.client-name-cell:hover { text-decoration: underline dotted var(--cv-cool-grey); }
+
+.name-edit-input {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.025em;
+  color: var(--cv-dark-grey);
+  border: 1px solid var(--cv-yellow);
+  border-radius: 3px;
+  padding: 2px 6px;
+  width: 100%;
+  outline: none;
 }
 
-/* Invoice badge */
+/* Invoice badge — clickable */
 .invoice-cell { min-width: 100px; }
 
 .invoice-badge {
@@ -168,8 +222,10 @@ main {
   padding: 3px 9px;
   border-radius: 12px;
   white-space: nowrap;
-  cursor: default;
+  cursor: pointer;
+  transition: opacity 0.15s;
 }
+.invoice-badge:hover { opacity: 0.8; }
 .invoice-badge.paid   { background: var(--cv-yellow); color: var(--cv-dark-grey); }
 .invoice-badge.unpaid { background: var(--cv-cool-grey); color: var(--cv-dark-grey); }
 
@@ -186,12 +242,11 @@ main {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  cursor: default;
+  cursor: pointer;
   transition: transform 0.12s;
   vertical-align: middle;
-  position: relative;
 }
-.circle:hover { transform: scale(1.25); }
+.circle:hover { transform: scale(1.3); }
 
 .circle.pending  { border: 2px solid var(--cv-cool-grey); background: transparent; }
 .circle.complete { background: var(--cv-yellow); border: 2px solid var(--cv-yellow); }
@@ -204,15 +259,96 @@ main {
   min-width: 52px;
   white-space: nowrap;
   padding-left: 14px !important;
-  color: var(--cv-dark-grey);
 }
-
 .last-updated-cell {
   font-size: 11px;
   color: var(--sys-muted);
   white-space: nowrap;
   min-width: 120px;
 }
+
+/* ── QUICK ACTION COLUMN ─────────────────────────────── */
+.quick-action-cell { width: 28px; padding: 10px 6px !important; text-align: center; }
+
+.quick-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--cv-cool-grey);
+  padding: 2px 4px;
+  border-radius: 3px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+.quick-action-btn:hover { color: var(--cv-dark-grey); background: #f0f0f0; }
+
+/* ── INLINE CONFIRM ──────────────────────────────────── */
+.inline-confirm {
+  position: absolute;
+  inset: 0;
+  background: rgba(16,24,32,0.9);
+  color: var(--cv-white);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 300;
+  z-index: 100;
+  border-radius: 2px;
+}
+.inline-confirm .confirm-msg { flex: 1; }
+.inline-confirm .confirm-yes {
+  background: var(--cv-yellow);
+  color: var(--cv-dark-grey);
+  border: none;
+  border-radius: 4px;
+  padding: 4px 14px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.inline-confirm .confirm-cancel {
+  color: var(--cv-cool-grey);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.inline-confirm .confirm-cancel:hover { color: var(--cv-white); }
+
+/* ── ADD CLIENT ROW ──────────────────────────────────── */
+.add-client-row { background: var(--sys-yellow-tint); }
+.add-client-row td { padding: 8px 10px; vertical-align: middle; }
+
+.add-name-input {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--cv-dark-grey);
+  border: 1px solid var(--cv-yellow);
+  border-radius: 3px;
+  padding: 4px 8px;
+  width: 100%;
+  outline: none;
+}
+.add-name-input::placeholder { color: var(--sys-muted); }
+
+.add-client-actions { white-space: nowrap; }
+.cancel-link {
+  color: var(--sys-muted);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 10px;
+}
+.cancel-link:hover { color: var(--cv-dark-grey); }
 
 /* ── LOADING / EMPTY ─────────────────────────────────── */
 .loading-cell {
@@ -233,3 +369,51 @@ main {
   letter-spacing: 0.05em;
   flex-shrink: 0;
 }
+
+/* ── SYNC BAR ────────────────────────────────────────── */
+.sync-bar {
+  text-align: center;
+  padding: 6px 32px;
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--sys-muted);
+  letter-spacing: 0.03em;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* ── CV DROPDOWN ─────────────────────────────────────── */
+.cv-dropdown {
+  position: fixed;
+  background: var(--cv-white);
+  border: 1px solid var(--cv-yellow);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  overflow: hidden;
+  z-index: 10000;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--cv-dark-grey);
+}
+
+.cv-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: background 0.1s;
+  user-select: none;
+}
+.cv-dropdown-option:hover,
+.cv-dropdown-option--focused { background: var(--sys-yellow-tint); }
+
+.cv-dropdown-option--action .cv-dd-label { color: var(--cv-dark-grey); font-weight: 600; }
+.cv-dropdown-option--muted  .cv-dd-label { color: var(--sys-muted); }
+
+.cv-dd-icon  { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
+.cv-dd-label { flex: 1; }
+
+/* Divider between option groups */
+.cv-dropdown-option + .cv-dropdown-option { border-top: 1px solid #f5f5f5; }

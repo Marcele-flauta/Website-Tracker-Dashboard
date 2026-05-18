@@ -128,4 +128,24 @@ async function appendRow(name, invoicePaid, stages) {
   return nextRow;
 }
 
-module.exports = { readWorkbook, patchCell, appendRow };
+// Patch multiple cells in a single workbook session (used by batch-update route).
+async function batchPatchCells(row, updates) {
+  const now = new Date().toISOString();
+  await withSession(async (sessionId) => {
+    for (const { col, value } of updates) {
+      await graphRequest(`${wsBase()}/range(address='${colLetter(col)}${row}')`, {
+        method: 'PATCH',
+        body: { values: [[value]] },
+        sessionId,
+      });
+    }
+    await graphRequest(`${wsBase()}/range(address='O${row}')`, {
+      method: 'PATCH',
+      body: { values: [[now]] },
+      sessionId,
+    });
+  });
+  return now;
+}
+
+module.exports = { readWorkbook, patchCell, appendRow, batchPatchCells };

@@ -10,8 +10,10 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client')));
 
 app.use(require('./routes/data'));
+app.use(require('./routes/refresh'));
 app.use(require('./routes/cell'));
 app.use(require('./routes/row'));
+app.use(require('./routes/batch'));
 
 app.listen(PORT, () => {
   console.log(`Website Tracker Dashboard → http://localhost:${PORT}`);

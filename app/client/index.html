@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,6 +15,10 @@
   <header class="header">
     <span class="header-title">Website Tracker</span>
     <div class="header-actions">
+      <button class="btn-refresh" id="refresh-btn">
+        <span class="refresh-icon">↻</span>
+        <span class="refresh-label">REFRESH DATA</span>
+      </button>
       <button class="btn-primary" id="add-client-btn">+ Add Client</button>
     </div>
   </header>
@@ -23,9 +28,7 @@
       <table class="tracker-table" id="tracker-table">
         <thead id="table-head"></thead>
         <tbody id="client-tbody">
-          <tr>
-            <td colspan="16" class="loading-cell">Loading…</td>
-          </tr>
+          <tr><td colspan="17" class="loading-cell">Loading…</td></tr>
         </tbody>
       </table>
     </div>
@@ -35,6 +38,10 @@
     Construct Virtual &nbsp;·&nbsp; Website Tracker Dashboard
   </footer>
 
+  <div class="sync-bar" id="sync-bar">Auto-syncing every 30 seconds · Last sync: —</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="dropdown.js"></script>
   <script src="toast.js"></script>
   <script src="app.js"></script>
 
