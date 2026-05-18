@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Tracker — Construct Virtual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Source+Sans+Pro:wght@300;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <span class="header-title">Website Tracker</span>
+    <div class="header-actions">
+      <button class="btn-primary" id="add-client-btn">+ Add Client</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="table-scroll">
+      <table class="tracker-table" id="tracker-table">
+        <thead id="table-head"></thead>
+        <tbody id="client-tbody">
+          <tr>
+            <td colspan="16" class="loading-cell">Loading…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Construct Virtual &nbsp;·&nbsp; Website Tracker Dashboard
+  </footer>
+
+  <script src="toast.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

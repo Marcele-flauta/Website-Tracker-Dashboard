@@ -1,0 +1,235 @@
+:root {
+  /* Brand — Construct Virtual Brand Guidelines 2021 */
+  --cv-yellow:    #fdce36;
+  --cv-orange:    #fbaa35;
+  --cv-dark-grey: #414042;
+  --cv-cool-grey: #d2d2d2;
+  --cv-black:     #101820;
+  --cv-white:     #ffffff;
+
+  /* System / functional (outside brand palette) */
+  --sys-yellow-tint: #fffbf0;
+  --sys-success:     #2e7d32;
+  --sys-error:       #c0392b;
+  --sys-warn:        #c17d00;
+  --sys-muted:       #aaaaaa;
+
+  /* Typography */
+  --font-body:    'Source Sans Pro', system-ui, sans-serif;
+  --font-display: 'Montserrat', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.025em;
+  color: var(--cv-dark-grey);
+  background: var(--cv-white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header {
+  background: var(--cv-black);
+  color: var(--cv-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cv-white);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────── */
+.btn-primary {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--cv-yellow);
+  color: var(--cv-dark-grey);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-primary:active { opacity: 0.7; }
+
+/* ── MAIN / TABLE WRAPPER ───────────────────────────── */
+main {
+  flex: 1;
+  padding: 28px 32px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border-radius: 4px;
+  border: 1px solid var(--cv-cool-grey);
+}
+
+/* ── TABLE ───────────────────────────────────────────── */
+.tracker-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+/* Column headers */
+.tracker-table thead th {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.025em;
+  color: var(--cv-dark-grey);
+  background: #f7f7f7;
+  text-align: left;
+  padding: 10px 10px 8px;
+  border-bottom: 2px solid var(--cv-cool-grey);
+  white-space: nowrap;
+}
+
+/* Stage column headers — rotated so 12 short headers don't eat width */
+.stage-col-header {
+  width: 28px;
+  min-width: 28px;
+  padding: 0 2px 8px 2px !important;
+  vertical-align: bottom;
+  text-align: center !important;
+}
+.stage-label-wrap {
+  display: inline-block;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cv-dark-grey);
+  max-height: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── ROWS ────────────────────────────────────────────── */
+.client-row {
+  border-bottom: 1px solid #ebebeb;
+  border-left: 3px solid transparent;
+  transition: background 0.1s, border-left-color 0.25s;
+}
+.client-row:last-child { border-bottom: none; }
+.client-row:hover { background: #fafafa; }
+.client-row.complete { border-left-color: var(--cv-orange); }
+
+.client-row td {
+  padding: 10px 10px;
+  vertical-align: middle;
+}
+
+/* Client name */
+.client-name-cell {
+  font-weight: 300;
+  min-width: 160px;
+  max-width: 220px;
+}
+
+/* Invoice badge */
+.invoice-cell { min-width: 100px; }
+
+.invoice-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 3px 9px;
+  border-radius: 12px;
+  white-space: nowrap;
+  cursor: default;
+}
+.invoice-badge.paid   { background: var(--cv-yellow); color: var(--cv-dark-grey); }
+.invoice-badge.unpaid { background: var(--cv-cool-grey); color: var(--cv-dark-grey); }
+
+/* ── STAGE CIRCLES ───────────────────────────────────── */
+.stage-cell {
+  width: 28px;
+  min-width: 28px;
+  padding: 10px 4px !important;
+  text-align: center;
+}
+
+.circle {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: default;
+  transition: transform 0.12s;
+  vertical-align: middle;
+  position: relative;
+}
+.circle:hover { transform: scale(1.25); }
+
+.circle.pending  { border: 2px solid var(--cv-cool-grey); background: transparent; }
+.circle.complete { background: var(--cv-yellow); border: 2px solid var(--cv-yellow); }
+.circle.na       { border: 2px dashed var(--cv-cool-grey); background: transparent; }
+
+/* ── PROGRESS / LAST UPDATED ────────────────────────── */
+.pct-cell {
+  font-weight: 600;
+  font-size: 12px;
+  min-width: 52px;
+  white-space: nowrap;
+  padding-left: 14px !important;
+  color: var(--cv-dark-grey);
+}
+
+.last-updated-cell {
+  font-size: 11px;
+  color: var(--sys-muted);
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+/* ── LOADING / EMPTY ─────────────────────────────────── */
+.loading-cell {
+  padding: 32px !important;
+  text-align: center;
+  color: var(--sys-muted);
+  font-style: italic;
+}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+.footer {
+  background: var(--cv-black);
+  color: var(--sys-muted);
+  text-align: center;
+  padding: 12px 32px;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
