@@ -188,7 +188,7 @@ main {
 
 /* Client name — clickable to edit */
 .client-name-cell {
-  font-weight: 300;
+  font-weight: 600;
   min-width: 160px;
   max-width: 220px;
   cursor: text;
