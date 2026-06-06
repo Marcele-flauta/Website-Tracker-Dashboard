@@ -1,6 +1,8 @@
 let _cache = null;
 
-const TTL_MS = () => parseInt(process.env.CACHE_TTL_MS || '60000', 10);
+// Default 5 minutes — gentler on App Service Free CPU quota.
+// Override with CACHE_TTL_MS env var (e.g. 60000 for 60s in development).
+const TTL_MS = () => parseInt(process.env.CACHE_TTL_MS || '300000', 10);
 
 function getCache() {
   return _cache;
